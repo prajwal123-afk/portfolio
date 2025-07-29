@@ -2,11 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Prajwal Malla | Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    /* Dark mode variables */
+    :root {
+      --bg-color-light: #f4f4f4;
+      --text-color-light: #333;
+      --bg-color-dark: #0e0e0e;
+      --text-color-dark: #fff;
+      --accent-color: #0af;
+      --accent-color-light: #00f7ff;
+    }
+
+    body {
+      background-color: var(--bg-color-light);
+      color: var(--text-color-light);
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    body.dark {
+      background-color: var(--bg-color-dark);
+      color: var(--text-color-dark);
+    }
+
+    header, section {
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    /* Dark mode header & section backgrounds */
+    body.dark header {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    body.dark section {
+      background: #1a1a1a;
+      box-shadow: 0 0 20px rgba(0,170,255,0.1);
+      border-radius: 12px;
+    }
+
+    /* Toggle button */
+    #theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      border: none;
+      padding: 10px 15px;
+      color: black;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1100;
+      transition: background 0.3s ease;
+    }
+
+    #theme-toggle:hover {
+      background: var(--accent-color-light);
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: var(--bg-color-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1200;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #0af;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Custom cursor */
+    #custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 20px; height: 20px;
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out, background-color 0.3s ease;
+      z-index: 1300;
+      mix-blend-mode: difference;
+      background: transparent;
+    }
+
+    /* Cursor grow on link hover */
+    a:hover ~ #custom-cursor,
+    button:hover ~ #custom-cursor {
+      transform: translate(-50%, -50%) scale(2);
+      background-color: var(--accent-color);
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor"></div>
+
+  <!-- Theme Toggle Button -->
+  <button id="theme-toggle">Dark Mode</button>
 
   <!-- Header -->
   <header>
@@ -22,7 +139,7 @@
   <!-- Hero Section -->
   <section class="hero" id="home">
     <div class="hero-left">
-      <h1>Hello, I’m <span class="highlight">Prajwal Malla</span></h1>
+      <h1>Hello, I’m <span class="highlight" id="typed-text">Prajwal Malla</span></h1>
       <p>A passionate Web Designer & Developer focused on clean, interactive designs and responsive layouts.</p>
     </div>
     <div class="hero-right">
@@ -82,8 +199,94 @@
       <textarea placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
+    <div class="socials">
+      <a href="https://github.com/prajwal123-afk" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
   </section>
 
-  <script src="script.js"></script>
+  <!-- Footer -->
+  <footer>
+    &copy; <span id="year"></span> Prajwal Malla. All rights reserved.
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button onclick="topFunction()" id="scrollTopBtn" title="Go to top">↑</button>
+
+  <script>
+    // Loader hide on window load
+    window.addEventListener('load', () => {
+      document.getElementById('loader').style.display = 'none';
+    });
+
+    // Custom cursor movement
+    const cursor = document.getElementById('custom-cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Dark mode toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      if(document.body.classList.contains('dark')){
+        themeBtn.textContent = 'Light Mode';
+      } else {
+        themeBtn.textContent = 'Dark Mode';
+      }
+    });
+
+    // Typing effect
+    const typedText = document.getElementById('typed-text');
+    const texts = ['Prajwal Malla', 'a Web Developer', 'a UI/UX Designer'];
+    let i = 0, j = 0, isDeleting = false;
+
+    function type() {
+      const current = texts[i];
+      if (isDeleting) {
+        typedText.textContent = current.substring(0, j--);
+      } else {
+        typedText.textContent = current.substring(0, j++);
+      }
+
+      if (!isDeleting && j === current.length) {
+        isDeleting = true;
+        setTimeout(type, 1000);
+      } else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i = (i + 1) % texts.length;
+        setTimeout(type, 500);
+      } else {
+        setTimeout(type, isDeleting ? 50 : 100);
+      }
+    }
+    type();
+
+    // Scroll-to-top button
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = function () {
+      scrollBtn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    };
+    function topFunction() {
+      document.documentElement.scrollTop = 0;
+    }
+
+    // Year update in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Filter projects (simple)
+    function filterProjects(category) {
+      const cards = document.querySelectorAll('.project-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
