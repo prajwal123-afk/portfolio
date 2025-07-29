@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
-    /* Dark mode variables */
+  
     :root {
       --bg-color-light: #f4f4f4;
       --text-color-light: #333;
@@ -32,7 +32,7 @@
       transition: background-color 0.5s, color 0.5s;
     }
 
-    /* Dark mode header & section backgrounds */
+ 
     body.dark header {
       background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
@@ -44,7 +44,7 @@
       border-radius: 12px;
     }
 
-    /* Toggle button */
+   
     #theme-toggle {
       position: fixed;
       top: 20px;
@@ -64,7 +64,7 @@
       background: var(--accent-color-light);
     }
 
-    /* Loader */
+
     #loader {
       position: fixed;
       top: 0; left: 0;
@@ -89,7 +89,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Custom cursor */
+  
     #custom-cursor {
       position: fixed;
       top: 0; left: 0;
@@ -104,7 +104,7 @@
       background: transparent;
     }
 
-    /* Cursor grow on link hover */
+  
     a:hover ~ #custom-cursor,
     button:hover ~ #custom-cursor {
       transform: translate(-50%, -50%) scale(2);
@@ -114,18 +114,18 @@
 </head>
 <body>
 
-  <!-- Loader -->
+
   <div id="loader">
     <div class="spinner"></div>
   </div>
 
-  <!-- Custom Cursor -->
+
   <div id="custom-cursor"></div>
 
-  <!-- Theme Toggle Button -->
+
   <button id="theme-toggle">Dark Mode</button>
 
-  <!-- Header -->
+
   <header>
     <div class="logo">Prajwal Malla</div>
     <nav>
@@ -136,7 +136,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+
   <section class="hero" id="home">
     <div class="hero-left">
       <h1>Hello, I’m <span class="highlight" id="typed-text">Prajwal Malla</span></h1>
@@ -147,7 +147,7 @@
     </div>
   </section>
 
-  <!-- About Section -->
+
   <section id="about">
     <h2>About Me</h2>
     <p>I specialize in crafting modern, user-friendly websites with attention to detail and a love for simplicity.</p>
@@ -158,7 +158,7 @@
     </ul>
   </section>
 
-  <!-- Projects Section -->
+  
   <section id="projects">
     <h2>My Projects</h2>
     <div class="filter-buttons">
@@ -190,7 +190,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section id="contact">
     <h2>Contact Me</h2>
     <form>
@@ -199,35 +198,31 @@
       <textarea placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
-    <div class="socials">
-      <a href="https://github.com/prajwal123-afk" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-    </div>
+
   </section>
 
-  <!-- Footer -->
+
   <footer>
     &copy; <span id="year"></span> Prajwal Malla. All rights reserved.
   </footer>
 
-  <!-- Scroll to Top Button -->
+
   <button onclick="topFunction()" id="scrollTopBtn" title="Go to top">↑</button>
 
   <script>
-    // Loader hide on window load
+
     window.addEventListener('load', () => {
       document.getElementById('loader').style.display = 'none';
     });
 
-    // Custom cursor movement
+
     const cursor = document.getElementById('custom-cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
 
-    // Dark mode toggle
+
     const themeBtn = document.getElementById('theme-toggle');
     themeBtn.addEventListener('click', () => {
       document.body.classList.toggle('dark');
@@ -238,7 +233,7 @@
       }
     });
 
-    // Typing effect
+
     const typedText = document.getElementById('typed-text');
     const texts = ['Prajwal Malla', 'a Web Developer', 'a UI/UX Designer'];
     let i = 0, j = 0, isDeleting = false;
@@ -264,7 +259,7 @@
     }
     type();
 
-    // Scroll-to-top button
+  
     const scrollBtn = document.getElementById("scrollTopBtn");
     window.onscroll = function () {
       scrollBtn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
@@ -273,10 +268,10 @@
       document.documentElement.scrollTop = 0;
     }
 
-    // Year update in footer
+
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Filter projects (simple)
+
     function filterProjects(category) {
       const cards = document.querySelectorAll('.project-card');
       cards.forEach(card => {
